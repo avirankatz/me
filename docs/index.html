@@ -1,0 +1,1714 @@
+<!-- filename: index.html -->
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Aviran Katz — Developer · Software Architect · Consultant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="Senior developer, software architect, and consultant. I help teams ship robust systems, scale reliably, and move fast without breaking things." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Aviran Katz — Developer · Software Architect · Consultant" />
+  <meta property="og:description"
+    content="I help teams ship robust systems, scale reliably, and move fast without breaking things." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image"
+    content="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='100%' height='100%' fill='%23f4f4f2'/><circle cx='315' cy='315' r='220' fill='%23e10600'/><rect x='650' y='140' width='380' height='380' fill='%23002fa7'/><text x='60' y='580' font-family='Arial' font-size='64' fill='%23000'>Aviran Katz — Architect & Consultant</text></svg>" />
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon"
+    href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f4f4f2'/><circle cx='50' cy='50' r='34' fill='%23e10600'/></svg>">
+
+  <!-- Fonts: Bauhaus-inspired geometric sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      /* Bauhaus palette: primary colors + black/white + subtle neutral */
+      --red: #e10600;
+      --blue: #002fa7;
+      --yellow: #ffd100;
+      --black: #111111;
+      --white: #ffffff;
+      --neutral: #f4f4f2;
+
+      --text: var(--black);
+      --muted: #555555;
+      --bg: var(--neutral);
+
+      --maxw: 1120px;
+      --radius: 8px;
+      --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.06);
+      --shadow-2: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+      --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+      --font-hebrew: 'Heebo', system-ui, -apple-system, sans-serif;
+
+      --grid-gap: 24px;
+
+      /* Animation timings */
+      --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* CSS Reset + base */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes wiggle {
+
+      0%,
+      100% {
+        transform: rotate(0deg);
+      }
+
+      25% {
+        transform: rotate(-5deg);
+      }
+
+      75% {
+        transform: rotate(5deg);
+      }
+    }
+
+    /* Scroll animations */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      transition: direction 0.5s var(--ease-smooth);
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      transition: transform 0.5s var(--ease-smooth);
+    }
+
+    html[lang="he"] body {
+      font-family: var(--font-hebrew);
+    }
+
+    /* RTL transition animation */
+    body.lang-switching {
+      animation: flipContent 0.6s var(--ease-smooth);
+    }
+
+    @keyframes flipContent {
+      0% {
+        opacity: 1;
+        transform: rotateY(0deg);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: rotateY(90deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: rotateY(0deg);
+      }
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Accessibility helpers */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: -999px;
+    }
+
+    .skip-link:focus {
+      left: 16px;
+      top: 16px;
+      background: var(--yellow);
+      color: var(--black);
+      padding: 8px 12px;
+      border-radius: 6px;
+      box-shadow: var(--shadow-1);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      background: rgba(244, 244, 242, 0.8);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      z-index: 50;
+      transition: all 0.3s var(--ease-smooth);
+    }
+
+    header.scrolled {
+      box-shadow: var(--shadow-1);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .logo {
+      display: inline-grid;
+      grid-auto-flow: column;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      display: inline-block;
+      background:
+        radial-gradient(circle at 50% 50%, var(--red) 0 60%, transparent 60%),
+        linear-gradient(90deg, var(--blue) 0 50%, transparent 50% 100%);
+      border-radius: 50%;
+      box-shadow: var(--shadow-1);
+      transition: transform 0.3s var(--ease-bounce);
+    }
+
+    .logo:hover .logo-mark {
+      transform: rotate(180deg) scale(1.1);
+    }
+
+    .nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav a {
+      color: var(--text);
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--blue);
+      transition: width 0.3s var(--ease-smooth);
+    }
+
+    .nav a:hover::after {
+      width: 100%;
+    }
+
+    .cta {
+      background: var(--yellow);
+      color: var(--black);
+      padding: 10px 16px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-1);
+      border: 2px solid var(--black);
+      transition: all 0.3s var(--ease-bounce);
+    }
+
+    .cta:hover {
+      background: var(--red);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+      text-decoration: none;
+    }
+
+    .cta::after {
+      display: none;
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      direction: ltr;
+      display: inline-flex;
+      gap: 4px;
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      padding: 4px;
+      box-shadow: var(--shadow-1);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-switcher::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background: var(--yellow);
+      border-radius: 999px;
+      transition: left 0.4s var(--ease-bounce), right 0.4s var(--ease-bounce);
+      z-index: 0;
+    }
+
+    html[lang="en"] .lang-switcher::before {
+      left: 4px;
+      right: auto;
+    }
+
+    html[lang="he"] .lang-switcher::before {
+      right: 4px;
+      left: auto;
+    }
+
+    .lang-btn {
+      position: relative;
+      z-index: 1;
+      padding: 6px 12px;
+      border: none;
+      background: transparent;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--black);
+      min-width: 40px;
+    }
+
+    .lang-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* RTL Support */
+    html[dir="rtl"] {
+      direction: rtl;
+    }
+
+    html[dir="rtl"] body {
+      text-align: right;
+    }
+
+    html[dir="rtl"] .container {
+      direction: rtl;
+    }
+
+    html[dir="rtl"] .logo {
+      display: inline-flex;
+      flex-direction: row-reverse;
+      direction: ltr;
+    }
+
+    html[dir="rtl"] .nav {
+      grid-template-columns: auto 1fr;
+    }
+
+
+    html[dir="rtl"] .hero-grid {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+
+    html[dir="rtl"] .testimonials,
+    html[dir="rtl"] .timeline {
+      direction: rtl;
+    }
+
+    html[dir="rtl"] .quote {
+      border-left: none;
+      border-right: 8px solid var(--blue);
+    }
+
+    html[dir="rtl"] .quote:hover {
+      transform: translateX(-8px);
+      border-right-color: var(--red);
+    }
+
+    html[dir="rtl"] .footer-grid a:hover {
+      transform: translateX(-4px);
+    }
+
+    html[dir="rtl"] .step::before {
+      left: auto;
+      right: -14px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 0 48px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--grid-gap);
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 4.6vw, 56px);
+      line-height: 1.1;
+      margin: 0 0 14px;
+      letter-spacing: -0.5px;
+      animation: slideInLeft 0.8s var(--ease-smooth);
+    }
+
+    .hero p {
+      font-size: clamp(16px, 2.2vw, 20px);
+      color: var(--muted);
+      margin: 0 0 24px;
+      animation: slideInLeft 0.8s var(--ease-smooth) 0.2s backwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      animation: slideInLeft 0.8s var(--ease-smooth) 0.4s backwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 2px solid var(--black);
+      color: var(--black);
+      background: var(--yellow);
+      box-shadow: var(--shadow-1);
+      transition: all 0.3s var(--ease-bounce);
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: var(--white);
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: var(--shadow-2);
+    }
+
+    .btn:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    /* Geometric art block (Bauhaus) */
+    .hero-art {
+      aspect-ratio: 1/1;
+      background:
+        radial-gradient(circle at 30% 40%, var(--red) 0 18%, transparent 18%),
+        radial-gradient(circle at 70% 70%, var(--blue) 0 22%, transparent 22%),
+        linear-gradient(135deg, var(--white) 0 50%, var(--yellow) 50% 100%);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-2);
+      position: relative;
+      animation: slideInRight 0.8s var(--ease-smooth), float 6s ease-in-out 1s infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-art:hover {
+      animation-play-state: paused;
+      transform: scale(1.02) rotate(2deg);
+    }
+
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border: 10px solid var(--black);
+      mix-blend-mode: multiply;
+      transition: all 0.3s var(--ease-smooth);
+    }
+
+    .hero-art:hover::after {
+      inset: 16px;
+      border-width: 12px;
+    }
+
+    /* Section base */
+    section {
+      padding: 64px 0;
+    }
+
+    section h2 {
+      font-size: clamp(22px, 3.4vw, 36px);
+      margin: 0 0 16px;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* Cards grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      transition: all 0.3s var(--ease-smooth);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 209, 0, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: var(--shadow-2);
+      border-color: var(--blue);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .card:hover h3 {
+      color: var(--blue);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Process timeline */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--grid-gap);
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      background: var(--white);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      transition: all 0.3s var(--ease-smooth);
+    }
+
+    .step:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-2);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: -14px;
+      left: -14px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-weight: 800;
+      box-shadow: var(--shadow-1);
+      transition: all 0.3s var(--ease-bounce);
+    }
+
+    .step:hover::before {
+      transform: rotate(360deg) scale(1.15);
+      background: var(--blue);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .quote {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow-1);
+      border-left: 8px solid var(--blue);
+      transition: all 0.3s var(--ease-smooth);
+      cursor: default;
+    }
+
+    .quote:hover {
+      transform: translateX(8px);
+      border-left-color: var(--red);
+      box-shadow: var(--shadow-2);
+    }
+
+    .quote cite {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-style: normal;
+      transition: color 0.3s ease;
+    }
+
+    .quote:hover cite {
+      color: var(--blue);
+    }
+
+    /* About */
+    .about {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--grid-gap);
+      align-items: start;
+    }
+
+    .about .badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--black);
+      border: 2px solid var(--black);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      animation: pulse 2s ease-in-out infinite;
+      transition: all 0.3s var(--ease-bounce);
+    }
+
+    .about .badge:hover {
+      animation-play-state: paused;
+      transform: scale(1.1);
+      background: var(--red);
+      color: var(--white);
+    }
+
+    /* Contact */
+    .contact-form {
+      background: var(--white);
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .contact-form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0, 47, 167, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .contact-form button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 2px solid var(--black);
+      color: var(--black);
+      background: var(--red);
+      box-shadow: var(--shadow-1);
+      cursor: pointer;
+      transition: all 0.3s var(--ease-bounce);
+    }
+
+    .contact-form button:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: var(--shadow-2);
+      background: var(--yellow);
+    }
+
+    .contact-form button:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 0 60px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      background: #fafafa;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .footer-grid a {
+      color: var(--text);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-grid a:hover {
+      color: var(--blue);
+      transform: translateX(4px);
+    }
+
+    .made-in {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .timeline {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .testimonials {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        grid-template-columns: 1fr;
+        transition: all 0.3s var(--ease-smooth);
+      }
+
+      .logo {
+        justify-self: center;
+        margin-bottom: 8px;
+        transition: all 0.3s var(--ease-smooth);
+      }
+
+      header.scrolled .logo {
+        justify-self: start;
+        margin-bottom: 0;
+      }
+
+      header.scrolled .nav {
+        grid-template-columns: auto 1fr;
+        align-items: center;
+      }
+
+      .nav ul {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 12px;
+        padding: 8px 0;
+        justify-content: flex-start;
+      }
+
+      .nav ul::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav li {
+        flex-shrink: 0;
+      }
+
+      .nav a {
+        white-space: nowrap;
+        font-size: 15px;
+      }
+
+      .cta {
+        padding: 8px 14px;
+        font-size: 15px;
+      }
+
+      .hero {
+        padding: 48px 0 32px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1,
+      .hero p {
+        text-align: center;
+      }
+
+      html[dir="rtl"] .hero h1,
+      html[dir="rtl"] .hero p {
+        text-align: center;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions .btn {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .hero-art {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      section {
+        padding: 48px 0;
+      }
+
+      .card,
+      .step,
+      .quote {
+        transition-delay: 0s !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+
+      .grid,
+      .timeline,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      section h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main" data-i18n="skipLink">Skip to content</a>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <div class="logo" aria-label="Site logo">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span>Aviran Katz</span>
+      </div>
+      <ul>
+        <li><a href="#services" data-i18n="nav.services">Services</a></li>
+        <li><a href="#work" data-i18n="nav.work">Case Studies</a></li>
+        <li><a href="#process" data-i18n="nav.process">Process</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a class="cta" href="#contact" data-i18n="nav.contact">Let's talk</a></li>
+        <li>
+          <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
+            <button class="lang-btn" data-lang="he" aria-label="Switch to Hebrew">עב</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <h1 id="hero-title">Developer, Software Architect, Consultant</h1>
+          <p>I partner with teams to design resilient systems, accelerate delivery, and reduce operational risk. From
+            MVP to scale, I help you build what matters.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#contact" aria-label="Start a project">Start a project</a>
+            <a class="btn secondary" href="#work" aria-label="View case studies">View case studies</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" aria-labelledby="services-title">
+      <div class="container">
+        <h2 id="services-title">Services</h2>
+        <p class="section-lead">Clear scope. High leverage. Outcomes over output.</p>
+        <div class="grid">
+          <article class="card" aria-label="Architecture & Scale">
+            <h3>Architecture & Scale</h3>
+            <p>Design pragmatic architectures for reliability and change. Monoliths or microservices, with data models
+              that age well.</p>
+          </article>
+          <article class="card" aria-label="Delivery & Enablement">
+            <h3>Delivery & Enablement</h3>
+            <p>Own key workstreams, unblock teams, and institute guardrails—CI/CD, observability, and quality gates that
+              speed you up.</p>
+          </article>
+          <article class="card" aria-label="AI & Product Strategy">
+            <h3>AI & Product Strategy</h3>
+            <p>Scope MVPs using modern AI stacks; evaluate build vs. buy; and define metrics that reflect business
+              value.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="work" aria-labelledby="work-title">
+      <div class="container">
+        <h2 id="work-title">Selected Work</h2>
+        <p class="section-lead">Highlights from projects spanning consumer apps, research, and operational tooling.</p>
+        <div class="grid">
+          <article class="card">
+            <h3>Scale to 100k+ Users</h3>
+            <p>Performance tuning, caching strategy, and DB migrations that kept feature velocity high while scaling
+              safely.</p>
+          </article>
+          <article class="card">
+            <h3>PostgreSQL at 45M+ Rows</h3>
+            <p>Index strategies, partitioning, and write-path stabilization to keep latency predictable and costs in
+              check.</p>
+          </article>
+          <article class="card">
+            <h3>AI Chat Ops</h3>
+            <p>Productionized AI workflows for support and internal tooling with observability, feedback loops, and
+              guardrails.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section aria-labelledby="testimonials-title">
+      <div class="container">
+        <h2 id="testimonials-title">What partners say</h2>
+        <div class="testimonials">
+          <blockquote class="quote">
+            “Aviran helped us ship faster with fewer regressions. Strong product sense with an architect’s rigor.”
+            <cite>— Senior PM, Tech Company</cite>
+          </blockquote>
+          <blockquote class="quote">
+            “He turns ambiguity into a plan, and a plan into outcomes. Our team is better for it.”
+            <cite>— Engineering Lead</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" aria-labelledby="process-title">
+      <div class="container">
+        <h2 id="process-title">How I work</h2>
+        <div class="timeline">
+          <div class="step">
+            <h3>1. Diagnose</h3>
+            <p>Clarify goals, constraints, and success metrics. Map the system and the team flows.</p>
+          </div>
+          <div class="step">
+            <h3>2. Design</h3>
+            <p>Propose options with trade-offs. Choose the simplest viable plan with clear milestones.</p>
+          </div>
+          <div class="step">
+            <h3>3. Deliver</h3>
+            <p>Implement, instrument, and iterate. Keep risk visible and velocity high.</p>
+          </div>
+          <div class="step">
+            <h3>4. Enable</h3>
+            <p>Document decisions, level-up the team, and set up guardrails for sustained progress.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="container about">
+        <div>
+          <span class="badge">Independent · Pragmatic · Reliable</span>
+          <h2 id="about-title">About Aviran</h2>
+          <p>I’m a senior developer and software architect who loves building things that endure. I collaborate with
+            teams to reduce complexity, improve delivery, and ship user-facing value.</p>
+          <p>Comfortable across cloud, data, and product. I optimize for clarity and momentum—designing systems that are
+            easy to change and hard to break.</p>
+        </div>
+        <div class="card" aria-label="Focus areas">
+          <h3>Focus Areas</h3>
+          <ul>
+            <li>System architecture & scaling</li>
+            <li>AI-enabled products & automation</li>
+            <li>Web/mobile app delivery</li>
+            <li>Cloud infra & ops: AWS · GCP · Azure</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title">Start a project</h2>
+        <p class="section-lead">Send a short brief and I’ll reply within one business day.</p>
+        <div class="contact-form" role="form" aria-label="Contact form">
+          <form id="contactForm" novalidate>
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" placeholder="Jane Doe" autocomplete="name" required />
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+
+            <label for="service">Service</label>
+            <select id="service" name="service" required>
+              <option value="">Select…</option>
+              <option>Architecture & Scale</option>
+              <option>Delivery & Enablement</option>
+              <option>AI & Product Strategy</option>
+              <option>Other</option>
+            </select>
+
+            <label for="message">Brief</label>
+            <textarea id="message" name="message" rows="6"
+              placeholder="Tell me about your goals, constraints, and timeline…" required></textarea>
+
+            <button type="submit">Send Inquiry</button>
+            <p id="status" role="status" aria-live="polite" style="margin-top:10px;"></p>
+
+            <p style="margin-top:12px; color: var(--muted);">
+              Prefer email? <a id="mailto" href="mailto:aviran.katz@gmail.com">aviran.katz@gmail.com</a>
+              · <a href="#" id="copyMail">Copy</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <strong>Aviran Katz</strong>
+          <p class="made-in">Independent developer · software architect · consultant</p>
+        </div>
+        <div>
+          <strong>Navigate</strong>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#work">Case Studies</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Contact</strong>
+          <ul>
+            <li><a href="mailto:aviran.katz@gmail.com">Email</a></li>
+            <li><a href="tel:+972547727612">+972 54 772 7612</a></li>
+            <li><a href="https://github.com/avirankatz" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Availability</strong>
+          <p>Open to short engagements and MVP architecture/AI consulting.</p>
+        </div>
+      </div>
+      <p class="made-in">© <span id="year"></span> Aviran Katz</p>
+    </div>
+  </footer>
+
+  <script>
+    // Translations
+    const translations = {
+      en: {
+        skipLink: "Skip to content",
+        nav: {
+          services: "Services",
+          work: "Case Studies",
+          process: "Process",
+          about: "About",
+          contact: "Let's talk"
+        },
+        hero: {
+          title: "Developer, Software Architect, Consultant",
+          description: "I partner with teams to design resilient systems, accelerate delivery, and reduce operational risk. From MVP to scale, I help you build what matters.",
+          cta1: "Start a project",
+          cta2: "View case studies"
+        },
+        services: {
+          title: "Services",
+          lead: "Clear scope. High leverage. Outcomes over output.",
+          service1: { title: "Architecture & Scale", desc: "Design pragmatic architectures for reliability and change. Monoliths or microservices, with data models that age well." },
+          service2: { title: "Delivery & Enablement", desc: "Own key workstreams, unblock teams, and institute guardrails—CI/CD, observability, and quality gates that speed you up." },
+          service3: { title: "AI & Product Strategy", desc: "Scope MVPs using modern AI stacks; evaluate build vs. buy; and define metrics that reflect business value." }
+        },
+        work: {
+          title: "Selected Work",
+          lead: "Highlights from projects spanning consumer apps, research, and operational tooling.",
+          work1: { title: "Scale to 100k+ Users", desc: "Performance tuning, caching strategy, and DB migrations that kept feature velocity high while scaling safely." },
+          work2: { title: "PostgreSQL at 45M+ Rows", desc: "Index strategies, partitioning, and write-path stabilization to keep latency predictable and costs in check." },
+          work3: { title: "AI Chat Ops", desc: "Productionized AI workflows for support and internal tooling with observability, feedback loops, and guardrails." }
+        },
+        testimonials: {
+          title: "What partners say",
+          quote1: { text: "Aviran helped us ship faster with fewer regressions. Strong product sense with an architect's rigor.", cite: "— Senior PM, Tech Company" },
+          quote2: { text: "He turns ambiguity into a plan, and a plan into outcomes. Our team is better for it.", cite: "— Engineering Lead" }
+        },
+        process: {
+          title: "How I work",
+          step1: { title: "1. Diagnose", desc: "Clarify goals, constraints, and success metrics. Map the system and the team flows." },
+          step2: { title: "2. Design", desc: "Propose options with trade-offs. Choose the simplest viable plan with clear milestones." },
+          step3: { title: "3. Deliver", desc: "Implement, instrument, and iterate. Keep risk visible and velocity high." },
+          step4: { title: "4. Enable", desc: "Document decisions, level-up the team, and set up guardrails for sustained progress." }
+        },
+        about: {
+          badge: "Independent · Pragmatic · Reliable",
+          title: "About Aviran",
+          p1: "I'm a senior developer and software architect who loves building things that endure. I collaborate with teams to reduce complexity, improve delivery, and ship user-facing value.",
+          p2: "Comfortable across cloud, data, and product. I optimize for clarity and momentum—designing systems that are easy to change and hard to break.",
+          focusTitle: "Focus Areas",
+          focus1: "System architecture & scaling",
+          focus2: "AI-enabled products & automation",
+          focus3: "Web/mobile app delivery",
+          focus4: "Cloud infra & ops: AWS · GCP · Azure"
+        },
+        contact: {
+          title: "Start a project",
+          lead: "Send a short brief and I'll reply within one business day.",
+          nameLabel: "Your name",
+          namePlaceholder: "Jane Doe",
+          emailLabel: "Email",
+          emailPlaceholder: "you@example.com",
+          serviceLabel: "Service",
+          servicePlaceholder: "Select…",
+          serviceOpt1: "Architecture & Scale",
+          serviceOpt2: "Delivery & Enablement",
+          serviceOpt3: "AI & Product Strategy",
+          serviceOpt4: "Other",
+          messageLabel: "Brief",
+          messagePlaceholder: "Tell me about your goals, constraints, and timeline…",
+          submit: "Send Inquiry",
+          preferEmail: "Prefer email?",
+          copy: "Copy"
+        },
+        footer: {
+          tagline: "Independent developer · software architect · consultant",
+          navigate: "Navigate",
+          contactTitle: "Contact",
+          email: "Email",
+          availability: "Availability",
+          availabilityText: "Open to short engagements and MVP architecture/AI consulting."
+        }
+      },
+      he: {
+        skipLink: "דלג לתוכן",
+        nav: {
+          services: "שירותים",
+          work: "פרויקטים",
+          process: "תהליך עבודה",
+          about: "אודות",
+          contact: "בואו נדבר"
+        },
+        hero: {
+          title: "מפתח, אדריכל תוכנה, יועץ",
+          description: "אני משתף פעולה עם צוותים לתכנון מערכות עמידות, האצת פיתוח והפחתת סיכונים תפעוליים. מ-MVP ועד סקייל, אני עוזר לכם לבנות את מה שחשוב באמת.",
+          cta1: "התחל פרויקט",
+          cta2: "צפה בפרויקטים"
+        },
+        services: {
+          title: "שירותים",
+          lead: "היקף ברור. השפעה גבוהה. תוצאות על פני פלט.",
+          service1: { title: "אדריכלות וסקייל", desc: "תכנון אדריכלות פרגמטית לאמינות ושינוי. מונוליתים או מיקרו-שירותים, עם מודלי נתונים שמזדקנים יפה." },
+          service2: { title: "פיתוח והעצמה", desc: "ניהול זרמי עבודה מרכזיים, פתיחת חסימות, והטמעת מסגרות—CI/CD, observability, ושערי איכות שמאיצים אתכם." },
+          service3: { title: "בינה מלאכותית ואסטרטגיה", desc: "הגדרת MVP עם טכנולוגיות AI מודרניות; הערכת build vs. buy; והגדרת מדדים שמשקפים ערך עסקי." }
+        },
+        work: {
+          title: "פרויקטים נבחרים",
+          lead: "דגשים מפרויקטים שמשתרעים על אפליקציות צרכן, מחקר וכלי תפעול.",
+          work1: { title: "סקייל ל-100k+ משתמשים", desc: "כיוון ביצועים, אסטרטגיית caching ומיגרציות DB ששמרו על מהירות פיתוח גבוהה תוך סקייל בטוח." },
+          work2: { title: "PostgreSQL עם 45M+ שורות", desc: "אסטרטגיות אינדקס, partitioning ויציבות write-path לשמירה על latency צפוי ועלויות נמוכות." },
+          work3: { title: "AI Chat Ops", desc: "הפקת תהליכי AI לייצור עבור תמיכה וכלים פנימיים עם observability, לולאות משוב ומסגרות בטיחות." }
+        },
+        testimonials: {
+          title: "מה אומרים שותפים",
+          quote1: { text: "אבירן עזר לנו לשלוח מהר יותר עם פחות באגים. חוש מוצר חזק עם קפדנות של אדריכל.", cite: "— מנהל מוצר בכיר, חברת טכנולוגיה" },
+          quote2: { text: "הוא הופך אי-בהירות לתוכנית, ותוכנית לתוצאות. הצוות שלנו טוב יותר בזכותו.", cite: "— ראש פיתוח" }
+        },
+        process: {
+          title: "איך אני עובד",
+          step1: { title: "1. אבחון", desc: "הבהרת מטרות, אילוצים ומדדי הצלחה. מיפוי המערכת ותהליכי הצוות." },
+          step2: { title: "2. עיצוב", desc: "הצעת אפשרויות עם טרייד-אופים. בחירת התוכנית הפשוטה ביותר עם אבני דרך ברורות." },
+          step3: { title: "3. פיתוח", desc: "יישום, מדידה ואיטרציה. שמירה על סיכונים גלויים ומהירות גבוהה." },
+          step4: { title: "4. העצמה", desc: "תיעוד החלטות, הכשרת הצוות והקמת מסגרות להתקדמות מתמשכת." }
+        },
+        about: {
+          badge: "עצמאי · פרגמטי · אמין",
+          title: "אודות אבירן",
+          p1: "אני מפתח בכיר ואדריכל תוכנה שאוהב לבנות דברים שנשארים לאורך זמן. אני משתף פעולה עם צוותים להפחתת מורכבות, שיפור פיתוח ואספקת ערך למשתמשים.",
+          p2: "נוח בענן, דאטה ומוצר. אני מייעל לבהירות ומומנטום—מעצב מערכות שקל לשנות וקשה לשבור.",
+          focusTitle: "תחומי התמקדות",
+          focus1: "אדריכלות מערכות וסקייל",
+          focus2: "מוצרי בינה מלאכותית ואוטומציה",
+          focus3: "פיתוח אפליקציות ווב/מובייל",
+          focus4: "תשתיות ענן ותפעול: AWS · GCP · Azure"
+        },
+        contact: {
+          title: "התחל פרויקט",
+          lead: "שלח תיאור קצר ואחזור אליך תוך יום עסקים אחד.",
+          nameLabel: "שמך",
+          namePlaceholder: "דני כהן",
+          emailLabel: "אימייל",
+          emailPlaceholder: "you@example.com",
+          serviceLabel: "שירות",
+          servicePlaceholder: "בחר...",
+          serviceOpt1: "אדריכלות וסקייל",
+          serviceOpt2: "פיתוח והעצמה",
+          serviceOpt3: "בינה מלאכותית ואסטרטגיה",
+          serviceOpt4: "אחר",
+          messageLabel: "תיאור",
+          messagePlaceholder: "ספר לי על המטרות, האילוצים והלוח זמנים שלך...",
+          submit: "שלח פנייה",
+          preferEmail: "מעדיף אימייל?",
+          copy: "העתק"
+        },
+        footer: {
+          tagline: "מפתח עצמאי · אדריכל תוכנה · יועץ",
+          navigate: "ניווט",
+          contactTitle: "יצירת קשר",
+          email: "אימייל",
+          availability: "זמינות",
+          availabilityText: "פתוח לפרויקטים קצרים וייעוץ אדריכלות/AI."
+        }
+      }
+    };
+
+    // Encapsulated state/utilities
+    const App = (() => {
+      const state = {
+        emailTo: "aviran.katz@gmail.com",
+        copied: false,
+        currentLang: "en"
+      };
+
+      const q = (sel) => document.querySelector(sel);
+      const qAll = (sel) => document.querySelectorAll(sel);
+
+      function setYear() {
+        const y = new Date().getFullYear();
+        const el = q("#year");
+        if (el) el.textContent = y;
+      }
+
+      function initScrollAnimations() {
+        const sections = qAll('section');
+        const cards = qAll('.card, .step, .quote');
+
+        // Add animation class to elements
+        sections.forEach(section => section.classList.add('animate-on-scroll'));
+        cards.forEach((card, index) => {
+          card.classList.add('animate-on-scroll');
+          card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              // Optionally unobserve after animation
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        });
+
+        sections.forEach(section => observer.observe(section));
+        cards.forEach(card => observer.observe(card));
+      }
+
+      function addParallaxEffect() {
+        const heroArt = q('.hero-art');
+        if (!heroArt) return;
+
+        window.addEventListener('scroll', () => {
+          const scrolled = window.pageYOffset;
+          const rate = scrolled * 0.3;
+          if (scrolled < window.innerHeight) {
+            heroArt.style.transform = `translateY(${rate}px)`;
+          }
+        }, { passive: true });
+      }
+
+      function addCardTilt() {
+        const cards = qAll('.card');
+        cards.forEach(card => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+          });
+        });
+      }
+
+      function copyEmail() {
+        navigator.clipboard.writeText(state.emailTo).then(() => {
+          state.copied = true;
+          const status = q("#status");
+          if (status) status.textContent = "Email copied to clipboard.";
+        }).catch(() => {
+          const status = q("#status");
+          if (status) status.textContent = "Unable to copy email. Please use the mail link above.";
+        });
+      }
+
+      function validate(formData) {
+        const errors = [];
+        const name = formData.get("name")?.trim();
+        const email = formData.get("email")?.trim();
+        const service = formData.get("service")?.trim();
+        const message = formData.get("message")?.trim();
+
+        if (!name) errors.push("Please add your name.");
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          errors.push("Please enter a valid email.");
+        }
+        if (!service) errors.push("Please select a service.");
+        if (!message || message.length < 20) {
+          errors.push("Please add a brief (20+ chars).");
+        }
+        return errors;
+      }
+
+      function submit(e) {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const status = q("#status");
+        const data = new FormData(form);
+
+        const errors = validate(data);
+        if (errors.length) {
+          status.textContent = errors.join(" ");
+          status.style.color = "var(--red)";
+          return;
+        }
+
+        // Security: we avoid hardcoding any API keys. By default, use mailto.
+        const subject = encodeURIComponent("Project Inquiry");
+        const body = encodeURIComponent(
+          `Name: ${data.get("name")}
+Email: ${data.get("email")}
+Service: ${data.get("service")}
+Brief:
+${data.get("message")}
+
+— Sent via landing page`
+        );
+
+        window.location.href = `mailto:${state.emailTo}?subject=${subject}&body=${body}`;
+        status.textContent = "Opening your email client…";
+        status.style.color = "var(--muted)";
+      }
+
+      function addStickyHeader() {
+        const header = q('header');
+        if (!header) return;
+
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+          const currentScroll = window.pageYOffset;
+
+          if (currentScroll > 50) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+
+          lastScroll = currentScroll;
+        }, { passive: true });
+      }
+
+      function updateContent(lang) {
+        const t = translations[lang];
+        const html = document.documentElement;
+
+        // Update HTML attributes
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
+
+        // Update all elements with data-i18n
+        qAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          const keys = key.split('.');
+          let value = t;
+
+          keys.forEach(k => {
+            value = value?.[k];
+          });
+
+          if (value) {
+            el.textContent = value;
+          }
+        });
+
+        // Update hero section
+        const heroTitle = q('.hero h1');
+        const heroDesc = q('.hero p');
+        const heroBtn1 = q('.hero .btn');
+        const heroBtn2 = q('.hero .btn.secondary');
+        if (heroTitle) heroTitle.textContent = t.hero.title;
+        if (heroDesc) heroDesc.textContent = t.hero.description;
+        if (heroBtn1) heroBtn1.textContent = t.hero.cta1;
+        if (heroBtn2) heroBtn2.textContent = t.hero.cta2;
+
+        // Update services section
+        q('#services-title').textContent = t.services.title;
+        q('#services .section-lead').textContent = t.services.lead;
+        const serviceCards = qAll('#services .card');
+        serviceCards[0].querySelector('h3').textContent = t.services.service1.title;
+        serviceCards[0].querySelector('p').textContent = t.services.service1.desc;
+        serviceCards[1].querySelector('h3').textContent = t.services.service2.title;
+        serviceCards[1].querySelector('p').textContent = t.services.service2.desc;
+        serviceCards[2].querySelector('h3').textContent = t.services.service3.title;
+        serviceCards[2].querySelector('p').textContent = t.services.service3.desc;
+
+        // Update work section
+        q('#work-title').textContent = t.work.title;
+        q('#work .section-lead').textContent = t.work.lead;
+        const workCards = qAll('#work .card');
+        workCards[0].querySelector('h3').textContent = t.work.work1.title;
+        workCards[0].querySelector('p').textContent = t.work.work1.desc;
+        workCards[1].querySelector('h3').textContent = t.work.work2.title;
+        workCards[1].querySelector('p').textContent = t.work.work2.desc;
+        workCards[2].querySelector('h3').textContent = t.work.work3.title;
+        workCards[2].querySelector('p').textContent = t.work.work3.desc;
+
+        // Update testimonials
+        q('#testimonials-title').textContent = t.testimonials.title;
+        const quotes = qAll('.quote');
+        quotes[0].childNodes[0].textContent = `"${t.testimonials.quote1.text}" `;
+        quotes[0].querySelector('cite').textContent = t.testimonials.quote1.cite;
+        quotes[1].childNodes[0].textContent = `"${t.testimonials.quote2.text}" `;
+        quotes[1].querySelector('cite').textContent = t.testimonials.quote2.cite;
+
+        // Update process section
+        q('#process-title').textContent = t.process.title;
+        const steps = qAll('.step');
+        steps[0].querySelector('h3').textContent = t.process.step1.title;
+        steps[0].querySelector('p').textContent = t.process.step1.desc;
+        steps[1].querySelector('h3').textContent = t.process.step2.title;
+        steps[1].querySelector('p').textContent = t.process.step2.desc;
+        steps[2].querySelector('h3').textContent = t.process.step3.title;
+        steps[2].querySelector('p').textContent = t.process.step3.desc;
+        steps[3].querySelector('h3').textContent = t.process.step4.title;
+        steps[3].querySelector('p').textContent = t.process.step4.desc;
+
+        // Update about section
+        q('.badge').textContent = t.about.badge;
+        q('#about-title').textContent = t.about.title;
+        const aboutPs = qAll('#about p');
+        aboutPs[0].textContent = t.about.p1;
+        aboutPs[1].textContent = t.about.p2;
+        q('#about .card h3').textContent = t.about.focusTitle;
+        const focusItems = qAll('#about .card li');
+        focusItems[0].textContent = t.about.focus1;
+        focusItems[1].textContent = t.about.focus2;
+        focusItems[2].textContent = t.about.focus3;
+        focusItems[3].textContent = t.about.focus4;
+
+        // Update contact section
+        q('#contact-title').textContent = t.contact.title;
+        q('#contact .section-lead').textContent = t.contact.lead;
+        q('label[for="name"]').textContent = t.contact.nameLabel;
+        q('#name').placeholder = t.contact.namePlaceholder;
+        q('label[for="email"]').textContent = t.contact.emailLabel;
+        q('#email').placeholder = t.contact.emailPlaceholder;
+        q('label[for="service"]').textContent = t.contact.serviceLabel;
+        const serviceOpts = qAll('#service option');
+        serviceOpts[0].textContent = t.contact.servicePlaceholder;
+        serviceOpts[1].textContent = t.contact.serviceOpt1;
+        serviceOpts[2].textContent = t.contact.serviceOpt2;
+        serviceOpts[3].textContent = t.contact.serviceOpt3;
+        serviceOpts[4].textContent = t.contact.serviceOpt4;
+        q('label[for="message"]').textContent = t.contact.messageLabel;
+        q('#message').placeholder = t.contact.messagePlaceholder;
+        q('button[type="submit"]').textContent = t.contact.submit;
+        const preferEmail = q('#contact p:last-of-type');
+        preferEmail.childNodes[0].textContent = t.contact.preferEmail + ' ';
+        q('#copyMail').textContent = t.contact.copy;
+
+        // Update footer
+        const footerTagline = q('.made-in');
+        if (footerTagline && footerTagline.textContent.includes('Independent')) {
+          footerTagline.textContent = t.footer.tagline;
+        }
+        const footerHeaders = qAll('footer strong');
+        footerHeaders[1].textContent = t.footer.navigate;
+        footerHeaders[2].textContent = t.footer.contactTitle;
+        footerHeaders[3].textContent = t.footer.availability;
+        const availText = qAll('footer .footer-grid > div')[3].querySelector('p:last-of-type');
+        if (availText) availText.textContent = t.footer.availabilityText;
+
+      }
+
+      function initLanguageSwitcher() {
+        const langBtns = qAll('.lang-btn');
+
+        langBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+
+            if (lang === state.currentLang) return;
+
+            // Update active state
+            langBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Add flip animation
+            document.body.classList.add('lang-switching');
+
+            // Update content after animation starts
+            setTimeout(() => {
+              state.currentLang = lang;
+              updateContent(lang);
+            }, 300);
+
+            // Remove animation class after completion
+            setTimeout(() => {
+              document.body.classList.remove('lang-switching');
+            }, 600);
+
+            // Save preference
+            localStorage.setItem('preferredLang', lang);
+          });
+        });
+
+        // Load saved preference
+        const savedLang = localStorage.getItem('preferredLang');
+        if (savedLang && savedLang !== state.currentLang) {
+          const btn = q(`[data-lang="${savedLang}"]`);
+          if (btn) btn.click();
+        }
+      }
+
+      function init() {
+        setYear();
+        initScrollAnimations();
+        addParallaxEffect();
+        addCardTilt();
+        addStickyHeader();
+        initLanguageSwitcher();
+
+        const form = q("#contactForm");
+        const copyMail = q("#copyMail");
+        if (form) form.addEventListener("submit", submit);
+        if (copyMail) copyMail.addEventListener("click", (e) => { e.preventDefault(); copyEmail(); });
+      }
+
+      return { init };
+    })();
+
+    document.addEventListener("DOMContentLoaded", App.init);
+  </script>
+</body>
+
+</html>
