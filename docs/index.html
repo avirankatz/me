@@ -1123,11 +1123,265 @@
         font-size: 28px;
       }
     }
+
+    /* THEME: Dark mode overrides and helpers */
+    html.theme-dark {
+      --bg: #0e0f12;
+      --text: #e7e7e7;
+      --muted: #a9a9a9;
+    }
+
+    html.theme-dark body {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    html.theme-dark header {
+      background: rgba(14, 15, 18, 0.75);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    html.theme-dark .nav .cta {
+      background: var(--yellow);
+      color: var(--black);
+      border-color: var(--black);
+    }
+
+    html.theme-dark a:not(.btn) {
+      color: #5ba9ff;
+    }
+
+    html.theme-dark a:hover:not(.btn) {
+      color: #9bc8ff;
+    }
+
+    html.theme-dark .nav a {
+      color: var(--text);
+    }
+
+    html.theme-dark .nav a::after {
+      background: #5ba9ff;
+    }
+
+    html.theme-dark .card,
+    html.theme-dark .step,
+    html.theme-dark .quote,
+    html.theme-dark .contact-form {
+      background: #15171a;
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    html.theme-dark .quote {
+      border-left-color: var(--yellow);
+    }
+
+    html.theme-dark[dir="rtl"] .quote {
+      border-right-color: var(--yellow);
+    }
+
+    html.theme-dark .btn.secondary {
+      background: #15171a;
+      color: var(--text);
+    }
+
+    html.theme-dark .contact-form input,
+    html.theme-dark .contact-form textarea,
+    html.theme-dark .contact-form select {
+      background: #0f1114;
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    html.theme-dark .footer-grid a {
+      color: var(--text);
+    }
+
+    html.theme-dark footer {
+      background: #0b0c0f;
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* E‑ink style transition overlay */
+    #einkOverlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 250;
+      background: radial-gradient(100% 100% at 50% 50%, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.06) 100%);
+      transition: opacity 120ms var(--ease-smooth);
+    }
+
+    #einkOverlay .scanbar {
+      position: absolute;
+      left: 0;
+      top: -100%;
+      width: 100%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 2px, rgba(0, 0, 0, 0.06) 2px 4px),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.12));
+      mix-blend-mode: difference;
+    }
+
+    #einkOverlay.active {
+      opacity: 1;
+    }
+
+    #einkOverlay.active .scanbar {
+      animation: eink-scan 520ms var(--ease-smooth) forwards;
+    }
+
+    @keyframes eink-scan {
+      0% {
+        top: -100%;
+      }
+
+      100% {
+        top: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #einkOverlay.active .scanbar {
+        animation: none;
+      }
+    }
+
+    /* Bauhaus Lamp Switcher */
+    .lamp-switch {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 92px;
+      height: 150px;
+      z-index: 260;
+      display: grid;
+      place-items: center;
+      touch-action: none;
+      user-select: none;
+    }
+
+    html[dir="rtl"] .lamp-switch {
+      left: 16px;
+      right: auto;
+    }
+
+    .lamp-switch button {
+      all: unset;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .lamp-switch svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
+    }
+
+    .lamp-shade {
+      transition: fill 260ms var(--ease-smooth), stroke 260ms var(--ease-smooth), transform 260ms var(--ease-bounce), filter 260ms var(--ease-smooth);
+    }
+
+    .lamp-pull {
+      transition: transform 260ms var(--ease-bounce);
+      transform-origin: 50% 0%;
+    }
+
+    .lamp-glow {
+      opacity: 0.0;
+      transition: opacity 260ms var(--ease-smooth);
+      filter: blur(8px);
+    }
+
+    html.theme-dark .lamp-glow {
+      opacity: 0.0;
+    }
+
+    html:not(.theme-dark) .lamp-glow {
+      opacity: 0.4;
+    }
+
+    .lamp-switch:hover .lamp-shade {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .lamp-switch .hint {
+      position: absolute;
+      bottom: 2px;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #111;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-1);
+      white-space: nowrap;
+      transform: translateY(6px);
+    }
+
+    html.theme-dark .lamp-switch .hint {
+      background: rgba(20, 22, 25, 0.85);
+      color: #e7e7e7;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
   </style>
 </head>
 
 <body>
   <a class="skip-link" href="#main" data-i18n="skipLink">Skip to content</a>
+  <!-- E‑ink overlay for theme transition -->
+  <div id="einkOverlay" aria-hidden="true">
+    <div class="scanbar"></div>
+  </div>
+  <!-- Bauhaus Lamp Switcher: click or pull the string to toggle theme -->
+  <div class="lamp-switch" aria-hidden="false">
+    <button id="lampButton" aria-label="Toggle theme" aria-pressed="false">
+      <svg id="lampSVG" viewBox="0 0 120 180" role="img" aria-labelledby="lampTitle lampDesc" tabindex="0">
+        <title id="lampTitle">Theme Lamp</title>
+        <desc id="lampDesc">A Bauhaus lamp with a pull string to switch between light and dark modes.</desc>
+        <defs>
+          <linearGradient id="shadeLight" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FFD700" />
+            <stop offset="50%" stop-color="#FFC000" />
+            <stop offset="100%" stop-color="#FFD700" />
+          </linearGradient>
+          <linearGradient id="shadeDark" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#D32F2F" />
+            <stop offset="50%" stop-color="#C62828" />
+            <stop offset="100%" stop-color="#D32F2F" />
+          </linearGradient>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0.6" />
+            <stop offset="100%" stop-color="#fff" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <!-- Base -->
+        <path id="lampBase" d="M30 160 L90 160 L85 150 L35 150 Z" fill="#111" />
+        <!-- Stem -->
+        <rect id="lampStem" x="56" y="80" width="8" height="70" fill="#111" />
+        <!-- Glow -->
+        <ellipse class="lamp-glow" cx="60" cy="90" rx="50" ry="20" fill="url(#glow)" />
+        <!-- Shade -->
+        <path class="lamp-shade" id="lampShade" d="M 15 80 A 45 45 0 0 1 105 80 L 15 80 Z" fill="url(#shadeLight)"
+          stroke="#111" stroke-width="2" />
+        <!-- Cap -->
+        <circle cx="60" cy="35" r="4" fill="#888" />
+        <!-- Pull string attachment -->
+        <circle cx="90" cy="80" r="2" fill="#111" />
+        <!-- Pull string -->
+        <g id="pullGroup" class="lamp-pull">
+          <line id="lampLine" x1="90" y1="80" x2="90" y2="120" stroke="#111" stroke-width="2" stroke-linecap="round" />
+          <circle id="lampPull" cx="90" cy="128" r="8" fill="#002fa7" stroke="#111" stroke-width="2" />
+        </g>
+      </svg>
+      <span class="hint">Pull or tap</span>
+    </button>
+  </div>
   <header>
     <div class="container nav" role="navigation" aria-label="Primary">
       <div class="logo" aria-label="Site logo">
@@ -1852,6 +2106,130 @@ ${data.get("message")}
         }
       }
 
+      // THEME: Light/Dark with Bauhaus Lamp switcher
+      function getInitialTheme() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+        try {
+          return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        } catch { return 'light'; }
+      }
+
+      function updateLampVisual(theme) {
+        const shade = document.getElementById('lampShade');
+        const btn = document.getElementById('lampButton');
+        const pullCircle = document.getElementById('lampPull');
+        const pullLine = document.getElementById('lampLine');
+        const base = document.getElementById('lampBase');
+        const stem = document.getElementById('lampStem');
+        if (stem) {
+          stem.setAttribute('fill', '#888');
+        }
+        if (base) {
+          base.setAttribute('fill', '#ccc');
+        }
+        if (shade) {
+          shade.setAttribute('fill', `url(#${theme === 'dark' ? 'shadeDark' : 'shadeLight'})`);
+          shade.setAttribute('stroke', theme === 'dark' ? '#ffd100' : '#111');
+        }
+        if (pullCircle) {
+          pullCircle.setAttribute('fill', theme === 'dark' ? '#ffd100' : '#002fa7');
+          pullCircle.setAttribute('stroke', theme === 'dark' ? '#ffd100' : '#111');
+        }
+        if (pullLine) {
+          pullLine.setAttribute('stroke', theme === 'dark' ? '#ffd100' : '#111');
+        }
+        if (btn) btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      }
+
+      function applyTheme(theme) {
+        const html = document.documentElement;
+        if (theme === 'dark') html.classList.add('theme-dark');
+        else html.classList.remove('theme-dark');
+        localStorage.setItem('theme', theme);
+        updateLampVisual(theme);
+      }
+
+      function flashEink(duration = 520) {
+        const overlay = document.getElementById('einkOverlay');
+        if (!overlay) return;
+        overlay.classList.add('active');
+        window.setTimeout(() => overlay.classList.remove('active'), duration);
+      }
+
+      function toggleTheme() {
+        const next = document.documentElement.classList.contains('theme-dark') ? 'light' : 'dark';
+        flashEink();
+        applyTheme(next);
+      }
+
+      function initTheme() {
+        applyTheme(getInitialTheme());
+        // Optional: watch system changes if user hasn't explicitly chosen
+        if (!localStorage.getItem('theme') && window.matchMedia) {
+          try {
+            const mq = window.matchMedia('(prefers-color-scheme: dark)');
+            mq.addEventListener?.('change', (e) => applyTheme(e.matches ? 'dark' : 'light'));
+          } catch { }
+        }
+      }
+
+      function initLamp() {
+        const btn = document.getElementById('lampButton');
+        const pullCircle = document.getElementById('lampPull');
+        const pullLine = document.getElementById('lampLine');
+        if (!btn || !pullCircle || !pullLine) return;
+
+        let dragging = false;
+        let startY = 0;
+        let dist = 0;
+        const maxPull = 56;
+        const trigger = 36;
+        const baseLineY2 = parseFloat(pullLine.getAttribute('y2')) || 120;
+        const baseCircleCy = parseFloat(pullCircle.getAttribute('cy')) || 128;
+
+        const clamp = (v) => Math.max(0, Math.min(maxPull, v));
+
+        const getY = (e) => (e.touches ? e.touches[0].clientY : e.clientY);
+        const onDown = (e) => {
+          dragging = true;
+          startY = getY(e);
+          dist = 0;
+          e.preventDefault();
+        };
+        const onMove = (e) => {
+          if (!dragging) return;
+          dist = clamp(getY(e) - startY);
+          pullLine.setAttribute('y2', (baseLineY2 + dist).toString());
+          pullCircle.setAttribute('cy', (baseCircleCy + dist).toString());
+          e.preventDefault();
+        };
+        const onUp = () => {
+          if (!dragging) return;
+          const shouldToggle = dist >= trigger;
+          // Reset instantly (attribute animation not trivial cross-browser)
+          pullLine.setAttribute('y2', baseLineY2.toString());
+          pullCircle.setAttribute('cy', baseCircleCy.toString());
+          dragging = false;
+          if (shouldToggle) toggleTheme();
+        };
+
+        pullCircle.addEventListener('pointerdown', onDown);
+        window.addEventListener('pointermove', onMove, { passive: false });
+        window.addEventListener('pointerup', onUp);
+        // Touch fallback
+        pullCircle.addEventListener('touchstart', onDown, { passive: false });
+        window.addEventListener('touchmove', onMove, { passive: false });
+        window.addEventListener('touchend', onUp);
+
+        btn.addEventListener('click', () => { if (!dragging) toggleTheme(); });
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); }
+        });
+
+        updateLampVisual(document.documentElement.classList.contains('theme-dark') ? 'dark' : 'light');
+      }
+
       function init() {
         setYear();
         // Create overlay once
@@ -1875,6 +2253,8 @@ ${data.get("message")}
         addCardTilt();
         addStickyHeader();
         initLanguageSwitcher();
+        initTheme();
+        initLamp();
 
         const form = q("#contactForm");
         const copyMail = q("#copyMail");
