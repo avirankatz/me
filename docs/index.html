@@ -64,6 +64,10 @@
       box-sizing: border-box;
     }
 
+    .d-none {
+      display: none;
+    }
+
     /* Animations */
     @keyframes fadeInUp {
       from {
@@ -1339,7 +1343,7 @@
     <div class="scanbar"></div>
   </div>
   <!-- Bauhaus Lamp Switcher: click or pull the string to toggle theme -->
-  <div class="lamp-switch" aria-hidden="false">
+  <div class="lamp-switch d-none" aria-hidden="false">
     <button id="lampButton" aria-label="Toggle theme" aria-pressed="false">
       <svg id="lampSVG" viewBox="0 0 120 180" role="img" aria-labelledby="lampTitle lampDesc" tabindex="0">
         <title id="lampTitle">Theme Lamp</title>
