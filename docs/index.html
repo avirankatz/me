@@ -194,24 +194,174 @@
     }
 
     /* RTL transition animation */
-    body.lang-switching {
-      animation: flipContent 0.6s var(--ease-smooth);
+    /* Two-phase language overlay: lights-out (black) then lights-in (Bauhaus reveal) */
+    .lang-transition {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      display: none;
+      z-index: 200;
+      pointer-events: none;
+      overflow: hidden;
     }
 
-    @keyframes flipContent {
+    .lang-transition.phase-out,
+    .lang-transition.phase-in {
+      display: block;
+    }
+
+    .lang-transition.phase-out {
+      animation: lightsOut 0.6s var(--ease-smooth) forwards;
+    }
+
+    .lang-transition.phase-in {
+      animation: lightsIn 1s var(--ease-smooth) forwards;
+    }
+
+    .lang-transition .shapes {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 0;
+      opacity: 0;
+    }
+
+    .lang-transition.phase-in .shapes {
+      animation: shapesIn 1s var(--ease-bounce) forwards;
+    }
+
+    .lang-transition .shape {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: scale(0) rotate(0deg);
+    }
+
+    .lang-transition.phase-in .shape {
+      animation: popIn 0.8s var(--ease-bounce) forwards;
+    }
+
+    .lang-transition .shape.circle-red {
+      background: var(--red);
+      border-radius: 50%;
+    }
+
+    .lang-transition .shape.circle-blue {
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    .lang-transition .shape.block-yellow {
+      background: var(--yellow);
+    }
+
+    .lang-transition .shape.block-white {
+      background: var(--white);
+    }
+
+    .lang-transition .shape.block-neutral {
+      background: var(--neutral);
+    }
+
+    .lang-transition.phase-in .shape:nth-child(3n) {
+      animation-delay: 0.2s;
+    }
+
+    .lang-transition.phase-in .shape:nth-child(4n) {
+      animation-delay: 0.32s;
+    }
+
+    .lang-transition.phase-in .shape:nth-child(5n) {
+      animation-delay: 0.44s;
+    }
+
+    .lang-transition.phase-in .shape:nth-child(7n) {
+      animation-delay: 0.56s;
+    }
+
+    @keyframes lightsOut {
       0% {
-        opacity: 1;
-        transform: rotateY(0deg);
+        opacity: 0;
       }
 
-      50% {
-        opacity: 0.5;
-        transform: rotateY(90deg);
+      40% {
+        opacity: 1;
       }
 
       100% {
         opacity: 1;
-        transform: rotateY(0deg);
+      }
+    }
+
+    @keyframes lightsIn {
+      0% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes shapesIn {
+      0% {
+        opacity: 0;
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0) rotate(0deg);
+      }
+
+      60% {
+        transform: scale(1.15) rotate(12deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lang-transition.phase-out {
+        animation: fadeLang 0.25s linear forwards;
+      }
+
+      .lang-transition.phase-in {
+        animation: fadeLang 0.35s linear forwards;
+      }
+
+      .lang-transition .shapes {
+        display: none;
+      }
+
+      @keyframes fadeLang {
+        0% {
+          opacity: 0;
+        }
+
+        50% {
+          opacity: 1;
+        }
+
+        100% {
+          opacity: 0;
+        }
       }
     }
 
@@ -784,7 +934,7 @@
       font-weight: 700;
       border: 2px solid var(--black);
       color: var(--black);
-      background: var(--red);
+      background: var(--yellow);
       box-shadow: var(--shadow-1);
       cursor: pointer;
       transition: all 0.3s var(--ease-bounce);
@@ -793,7 +943,8 @@
     .contact-form button:hover {
       transform: translateY(-4px) scale(1.05);
       box-shadow: var(--shadow-2);
-      background: var(--yellow);
+      background: var(--red);
+      color: var(--white);
     }
 
     .contact-form button:active {
@@ -1663,19 +1814,30 @@ ${data.get("message")}
             langBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            // Add flip animation
-            document.body.classList.add('lang-switching');
-
-            // Update content after animation starts
-            setTimeout(() => {
+            // Two-phase overlay sequence
+            const overlay = document.querySelector('.lang-transition');
+            if (overlay) {
+              overlay.classList.remove('phase-in');
+              overlay.classList.add('phase-out');
+              const outHandler = () => {
+                overlay.removeEventListener('animationend', outHandler);
+                // Switch content while lights are out
+                state.currentLang = lang;
+                updateContent(lang);
+                // Begin lights-in phase
+                overlay.classList.remove('phase-out');
+                overlay.classList.add('phase-in');
+                const inHandler = () => {
+                  overlay.removeEventListener('animationend', inHandler);
+                  overlay.classList.remove('phase-in');
+                };
+                overlay.addEventListener('animationend', inHandler);
+              };
+              overlay.addEventListener('animationend', outHandler);
+            } else {
               state.currentLang = lang;
               updateContent(lang);
-            }, 300);
-
-            // Remove animation class after completion
-            setTimeout(() => {
-              document.body.classList.remove('lang-switching');
-            }, 600);
+            }
 
             // Save preference
             localStorage.setItem('preferredLang', lang);
@@ -1692,6 +1854,22 @@ ${data.get("message")}
 
       function init() {
         setYear();
+        // Create overlay once
+        if (!document.querySelector('.lang-transition')) {
+          const overlay = document.createElement('div');
+          overlay.className = 'lang-transition';
+          overlay.setAttribute('aria-hidden', 'true');
+          const shapes = document.createElement('div');
+          shapes.className = 'shapes';
+          const palette = ['circle-red', 'block-neutral', 'circle-blue', 'block-yellow', 'block-white', 'circle-red', 'block-neutral', 'circle-blue', 'block-yellow', 'block-white', 'circle-red', 'block-neutral', 'circle-blue', 'block-yellow', 'block-white', 'circle-red', 'block-neutral', 'circle-blue', 'block-yellow', 'block-white'];
+          palette.forEach(cls => {
+            const s = document.createElement('span');
+            s.className = 'shape ' + cls;
+            shapes.appendChild(s);
+          });
+          overlay.appendChild(shapes);
+          document.body.appendChild(overlay);
+        }
         initScrollAnimations();
         addParallaxEffect();
         addCardTilt();
